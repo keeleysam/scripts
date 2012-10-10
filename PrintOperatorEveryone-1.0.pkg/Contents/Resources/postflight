@@ -1,0 +1,21 @@
+#!/bin/sh
+#############################################################################
+#																			#
+#	system.print.operator script											#
+#	Version 1.0, 2012-10-10													#
+#	Samuel Keeley, sam_keeley@kirk.senate.gov								#
+#	allows everyone to pause and unpause printers							#
+#############################################################################
+
+#* PLIST BUDDY
+PB="/usr/libexec/PlistBuddy"
+
+logger "editing /etc/authorization"
+sudo /bin/cp -f /etc/authorization{,.original}
+#+ Allow printing operator rights
+sudo $PB -c "set rights:system.print.operator:group everyone" "/etc/authorization"
+#+ Permissions
+sudo chown root:wheel "/etc/authorization"
+sudo chmod 644 "/etc/authorization"
+
+exit 0
